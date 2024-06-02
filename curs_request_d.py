@@ -32,7 +32,7 @@ def request_curs(pdate):  # Функция по дате получает кур
         else:  # Данных нет
             print("Нет данных!")
     except Exception as e:
-        print("Exception :", e)
+        print("Ошибка :", e)
 
 
 date_curs = input("Введите дату в виде ДД.ММ.ГГГГ: ")
