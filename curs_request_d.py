@@ -44,9 +44,9 @@ def request_curs_val(pdate, date_curs, val):
         print("Ошибка :", e)
     else:
         date = res.json()
-        if 'status' in date:
-            if date['status'] == 404:
-                date = ""
+        if 'status' in date: # Если есть status
+            if date['status'] == 404:  # и его значение 404,
+                date = "" # то это означает, что нет данных.
         if date:  # Данные есть
             print(
                 f"Код валюты: {date['Cur_ID']}, Курс: {date['Cur_OfficialRate']} за {date['Cur_Scale']} {date['Cur_Name']}")
