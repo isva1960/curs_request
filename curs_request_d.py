@@ -24,13 +24,12 @@ def request_curs(pdate, date_curs):  # Функция по дате получа
             # В цикле перебираем элементы списка. Каждый элемент помещаем в curs
             for curs in date:
                 # Преобразовываем дату типа 2023-01-10T00:00:00 в 01.10.202
-                cdate = datetime.datetime.strptime(curs['Date'], '%Y-%m-%dT%H:%M:%S').strftime("%Y.%m.%d")
                 # Выводим результат, типа
                 # Код валюты: 459, Дата: 2024.06.01, Код: KZT, Курс: 7.2022 за 1000 Тенге
                 if curs['Cur_Abbreviation'] != 'USD' and curs['Cur_Abbreviation'] != 'EUR' and curs[
                     'Cur_Abbreviation'] != 'RUB':
                     print(
-                        f"Код валюты: {curs['Cur_ID']}, Дата: {cdate}, Код: {curs['Cur_Abbreviation']}, Курс: {curs['Cur_OfficialRate']} за {curs['Cur_Scale']} {curs['Cur_Name']}")
+                        f"Код валюты: {curs['Cur_ID']}, Курс: {curs['Cur_OfficialRate']} за {curs['Cur_Scale']} {curs['Cur_Name']}")
         else:  # Данных нет
             print(f"Нет данных за {date_curs}!")
     except Exception as e:
@@ -49,9 +48,8 @@ def request_curs_val(pdate, date_curs, val):
             if date['status'] == 404:
                 date = ""
         if date:  # Данные есть
-            cdate = datetime.datetime.strptime(date['Date'], '%Y-%m-%dT%H:%M:%S').strftime("%Y.%m.%d")
             print(
-                f"Код валюты: {date['Cur_ID']}, Дата: {cdate}, Код: {date['Cur_Abbreviation']}, Курс: {date['Cur_OfficialRate']} за {date['Cur_Scale']} {date['Cur_Name']}")
+                f"Код валюты: {date['Cur_ID']}, Курс: {date['Cur_OfficialRate']} за {date['Cur_Scale']} {date['Cur_Name']}")
         else:  # Данных нет
             print(f"Нет данных по валюте {val} за {date_curs}!")
 
@@ -65,6 +63,7 @@ except:
     # Если дата задана неверно, выводим сообщение об ошибке
     print("Дата задана неверно!")
 else:
+    print(f"Дата курсов: {date_curs}")
     print('Основные валюты')
     request_curs_val(formatted_date, date_curs, 'USD')
     request_curs_val(formatted_date, date_curs, 'EUR')
