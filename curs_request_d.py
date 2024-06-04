@@ -38,15 +38,18 @@ def request_curs(pdate, date_curs):  # Функция по дате получа
 
 def request_curs_val(pdate, date_curs, val):
     try:
+        # Делаем запрос. Параметры periodicity=0 - ежедневный курс, ondate=pdate (дата курсов, вводится в программе),
+        # parammode=2 - трехзначный буквенный код валюты (ИСО 4217)
+        # res - ответ
         res = requests.get(f"https://api.nbrb.by/exrates/rates/{val}",
                            params={"periodicity": 0, "ondate": pdate, "parammode": 2})
     except Exception as e:
         print("Ошибка :", e)
     else:
         date = res.json()
-        if 'status' in date: # Если есть status
+        if 'status' in date:  # Если есть status
             if date['status'] == 404:  # и его значение 404,
-                date = "" # то это означает, что нет данных.
+                date = ""  # то это означает, что нет данных.
         if date:  # Данные есть
             print(
                 f"Код валюты: {date['Cur_ID']}, Курс: {date['Cur_OfficialRate']} за {date['Cur_Scale']} {date['Cur_Name']}")
@@ -54,20 +57,22 @@ def request_curs_val(pdate, date_curs, val):
             print(f"Нет данных по валюте {val} за {date_curs}!")
 
 
-date_curs = input("Введите дату в виде ДД.ММ.ГГГГ: ")
-try:
-    # Преобразовываем дату ДД.ММ.ГГГГ в ГГГГ-ММ-ДД
-    formatted_date = datetime.datetime.strptime(date_curs, '%d.%m.%Y').strftime('%Y-%m-%d')
-    # если дата задана верно, выполняем запрос
-except:
-    # Если дата задана неверно, выводим сообщение об ошибке
-    print("Дата задана неверно!")
-else:
-    print(f"Дата курсов: {date_curs}")
-    print('Основные валюты')
-    request_curs_val(formatted_date, date_curs, 'USD')
-    request_curs_val(formatted_date, date_curs, 'EUR')
-    request_curs_val(formatted_date, date_curs, 'RUB')
-    print('Прочие валюты')
-    request_curs(formatted_date, date_curs)
-input("Нажмите Enter")
+txtcont = ""
+while not txtcont:
+    date_curs = input("Введите дату в виде ДД.ММ.ГГГГ: ")
+    try:
+        # Преобразовываем дату ДД.ММ.ГГГГ в ГГГГ-ММ-ДД
+        formatted_date = datetime.datetime.strptime(date_curs, '%d.%m.%Y').strftime('%Y-%m-%d')
+        # если дата задана верно, выполняем запрос
+    except:
+        # Если дата задана неверно, выводим сообщение об ошибке
+        print("Дата задана неверно!")
+    else:
+        print(f"Дата курсов: {date_curs}")
+        print('Основные валюты')
+        request_curs_val(formatted_date, date_curs, 'USD')
+        request_curs_val(formatted_date, date_curs, 'EUR')
+        request_curs_val(formatted_date, date_curs, 'RUB')
+        print('Прочие валюты')
+        request_curs(formatted_date, date_curs)
+    txtcont = input("Нажмите Enter для ввода новой даты или любое количество символов для завершения. ")
