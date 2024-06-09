@@ -57,22 +57,32 @@ def request_curs_val(pdate, date_curs, val):
             print(f"Нет данных по валюте {val} за {date_curs}!")
 
 
-txtcont = ""
-while not txtcont:
-    date_curs = input("Введите дату в виде ДД.ММ.ГГГГ: ")
-    try:
-        # Преобразовываем дату ДД.ММ.ГГГГ в ГГГГ-ММ-ДД
-        formatted_date = datetime.datetime.strptime(date_curs, '%d.%m.%Y').strftime('%Y-%m-%d')
-        # если дата задана верно, выполняем запрос
-    except:
-        # Если дата задана неверно, выводим сообщение об ошибке
-        print("Дата задана неверно!")
-    else:
-        print(f"Дата курсов: {date_curs}")
-        print('Основные валюты')
-        request_curs_val(formatted_date, date_curs, 'USD')
-        request_curs_val(formatted_date, date_curs, 'EUR')
-        request_curs_val(formatted_date, date_curs, 'RUB')
-        print('Прочие валюты')
-        request_curs(formatted_date, date_curs)
-    txtcont = input("Нажмите Enter для ввода новой даты или любое количество символов для завершения. ")
+def main() -> None:
+    lst_cont = ('q', 'e', 'к', 'в')
+    f_cont = True
+    while f_cont:
+        date_curs = input(
+            f"Введите дату в виде ДД.ММ.ГГГГ для получения курсов\nили один из символов: {', '.join(lst_cont)} на любом регистре для завершения. ")
+        date_curs = date_curs.lower()
+        if len(date_curs) == 1 and date_curs in lst_cont:
+            f_cont = False
+        else:
+            try:
+                # Преобразовываем дату ДД.ММ.ГГГГ в ГГГГ-ММ-ДД
+                formatted_date = datetime.datetime.strptime(date_curs, '%d.%m.%Y').strftime('%Y-%m-%d')
+                # если дата задана верно, выполняем запрос
+            except:
+                # Если дата задана неверно, выводим сообщение об ошибке
+                print("Дата задана неверно!")
+            else:
+                print(f"\nДата курсов: {date_curs}")
+                print('Основные валюты')
+                request_curs_val(formatted_date, date_curs, 'USD')
+                request_curs_val(formatted_date, date_curs, 'EUR')
+                request_curs_val(formatted_date, date_curs, 'RUB')
+                print('Прочие валюты')
+                request_curs(formatted_date, date_curs)
+
+
+if __name__ == '__main__':
+    main()
