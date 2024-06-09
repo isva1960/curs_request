@@ -2,7 +2,7 @@ import requests
 import datetime
 
 
-def request_curs(pdate, date_curs):  # Функция по дате получает курсы валют и выводит на экран.
+def request_curs(pdate):  # Функция по дате получает курсы валют и выводит на экран.
     try:
         # Делаем запрос. Параметры periodicity=0 - ежедневный курс, ondate=pdate (дата курсов, вводится в программе)
         # res - ответ
@@ -31,12 +31,12 @@ def request_curs(pdate, date_curs):  # Функция по дате получа
                     print(
                         f"Код валюты: {curs['Cur_ID']}, Курс: {curs['Cur_OfficialRate']} за {curs['Cur_Scale']} {curs['Cur_Name']}")
         else:  # Данных нет
-            print(f"Нет данных за {date_curs}!")
+            print(f"Нет данных!")
     except Exception as e:
         print("Ошибка :", e)
 
 
-def request_curs_val(pdate, date_curs, val):
+def request_curs_val(pdate, val):
     try:
         # Делаем запрос. Параметры periodicity=0 - ежедневный курс, ondate=pdate (дата курсов, вводится в программе),
         # parammode=2 - трехзначный буквенный код валюты (ИСО 4217)
@@ -54,7 +54,7 @@ def request_curs_val(pdate, date_curs, val):
             print(
                 f"Код валюты: {date['Cur_ID']}, Курс: {date['Cur_OfficialRate']} за {date['Cur_Scale']} {date['Cur_Name']}")
         else:  # Данных нет
-            print(f"Нет данных по валюте {val} за {date_curs}!")
+            print(f"Нет данных по валюте {val}!")
 
 
 def main() -> None:
@@ -77,11 +77,11 @@ def main() -> None:
             else:
                 print(f"\nДата курсов: {date_curs}")
                 print('Основные валюты')
-                request_curs_val(formatted_date, date_curs, 'USD')
-                request_curs_val(formatted_date, date_curs, 'EUR')
-                request_curs_val(formatted_date, date_curs, 'RUB')
+                request_curs_val(formatted_date, 'USD')
+                request_curs_val(formatted_date, 'EUR')
+                request_curs_val(formatted_date, 'RUB')
                 print('Прочие валюты')
-                request_curs(formatted_date, date_curs)
+                request_curs(formatted_date)
 
 
 if __name__ == '__main__':
