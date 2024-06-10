@@ -62,7 +62,7 @@ def main() -> None:
                 t_date = t_date + datetime.timedelta(days=1)
                 wb.save('Курс доллара США.xlsx')
             print('Данные сформированы в таблице Курс доллара США.xlsx')
-    print('Нажмите клавишу Enter')
+    input('Нажмите клавишу Enter')
 
 
 if __name__ == '__main__':
