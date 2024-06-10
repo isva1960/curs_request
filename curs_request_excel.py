@@ -1,8 +1,6 @@
 import openpyxl
 import datetime
 import requests
-from openpyxl.styles import Font, numbers
-
 
 def request_curs_val(pdate, val):
     ret_val = -1
