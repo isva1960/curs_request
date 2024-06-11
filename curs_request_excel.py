@@ -19,6 +19,8 @@ def request_curs_val(pdate, val):
                 date = ""  # то это означает, что нет данных.
         if date:  # Данные есть
             ret_val = date['Cur_OfficialRate']
+        else:
+            print(f"Нет данных по валюте {val}!")
     return ret_val
 
 
