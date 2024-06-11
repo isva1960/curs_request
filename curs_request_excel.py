@@ -65,7 +65,7 @@ def main() -> None:
                     cell.value = curs_value
                     cell.number_format = '0.0000'
                     t_date = t_date + datetime.timedelta(days=1)
-                print('Данные сформированы в таблице Курс доллара США.xlsx')
+                print('Данные сформированы в таблице "Курс доллара США.xlsx"')
                 wb.save('Курс доллара США.xlsx')
     input('Нажмите клавишу Enter')
 
