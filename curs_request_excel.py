@@ -49,21 +49,24 @@ def main() -> None:
             # Если дата задана неверно, выводим сообщение об ошибке
             print("Конечная дата задана неверно!")
         else:
-            t_date = beg_date
-            i = 1
-            while t_date <= end_date:
-                i += 1
-                formatted_date = t_date.strftime('%Y-%m-%d')
-                curs_value = request_curs_val(formatted_date, "USD")
-                cell = ws['A' + str(i)]
-                cell.value = t_date
-                cell.number_format = 'DD.MM.YYYY;@'
-                cell = ws['B' + str(i)]
-                cell.value = curs_value
-                cell.number_format = '0.0000'
-                t_date = t_date + datetime.timedelta(days=1)
+            if beg_date > end_date:
+                print("Конечная дата меньше начальной!")
+            else:
+                t_date = beg_date
+                i = 1
+                while t_date <= end_date:
+                    i += 1
+                    formatted_date = t_date.strftime('%Y-%m-%d')
+                    curs_value = request_curs_val(formatted_date, "USD")
+                    cell = ws['A' + str(i)]
+                    cell.value = t_date
+                    cell.number_format = 'DD.MM.YYYY;@'
+                    cell = ws['B' + str(i)]
+                    cell.value = curs_value
+                    cell.number_format = '0.0000'
+                    t_date = t_date + datetime.timedelta(days=1)
+                print('Данные сформированы в таблице Курс доллара США.xlsx')
                 wb.save('Курс доллара США.xlsx')
-            print('Данные сформированы в таблице Курс доллара США.xlsx')
     input('Нажмите клавишу Enter')
 
 
