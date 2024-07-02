@@ -61,6 +61,7 @@ def main() -> None:
                     cell = ws['A' + str(i)]
                     cell.value = t_date
                     cell.number_format = 'DD.MM.YYYY;@'
+                    print('Формируются данные за '+t_date.strftime('%d.%m.%Y'))
                     cell = ws['B' + str(i)]
                     cell.value = curs_value
                     cell.number_format = '0.0000'
