@@ -4,6 +4,7 @@ import openpyxl
 import datetime
 import requests
 
+
 def request_curs_val(pdate, val):
     ret_val = -1
     try:
@@ -63,7 +64,7 @@ def main() -> None:
                     cell = ws['A' + str(i)]
                     cell.value = t_date
                     cell.number_format = 'DD.MM.YYYY;@'
-                    print('Формируются данные за '+t_date.strftime('%d.%m.%Y'))
+                    print('Формируются данные за ' + t_date.strftime('%d.%m.%Y'))
                     cell = ws['B' + str(i)]
                     cell.value = curs_value
                     cell.number_format = '0.0000'
