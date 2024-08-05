@@ -5,7 +5,7 @@ import datetime
 import requests
 
 
-def request_curs_val(pdate, val):
+def request_curs_val(pdate: str, val: str) -> float:
     ret_val = -1
     try:
         # Делаем запрос. Параметры periodicity=0 - ежедневный курс, ondate=pdate (дата курсов, вводится в программе),
@@ -22,6 +22,7 @@ def request_curs_val(pdate, val):
                 date = ""  # то это означает, что нет данных.
         if date:  # Данные есть
             ret_val = date['Cur_OfficialRate']
+            print(ret_val,type(ret_val))
         else:
             print(f"Нет данных по валюте {val}!")
     return ret_val
